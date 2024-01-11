@@ -1,0 +1,71 @@
+<section class="content-header" th:fragment="navbarfragment">
+<table width="100%" style="margin-top:20px" >
+    <tr>
+        <td width="3%">
+        </td>
+
+        <td width="50%">
+            <div th:if="${#authorization.expression('isAuthenticated()') == true}">
+                <div class="uk-inline">
+                    <button class="btn btn-outline-light" style="background-color:#62ab00" type="button">MENU</button>
+                    <div uk-dropdown>
+                        <ul class="uk-nav uk-dropdown-nav">
+                            <li><a class="navbar-brand" href="/" style="color:#62ab00" >Home</a></li>
+                            <li>
+                                <form th:action="@{/cart}" method="post">
+                                    <input type="hidden" th:value="${#request.userPrincipal.principal.getId()}" name="id">
+                                    <a href="#" style="color:#62ab00; text-decoration:none;" onclick="this.closest('form').submit();return false;">Shopping cart</a>
+                                </form>
+                            </li>
+                            <li>
+                                <form th:action="@{/cart_created}" method="post">
+                                    <input type="hidden" th:value="${#request.userPrincipal.principal.getId()}" name="id">
+                                    <a href="#" style="color:#62ab00; text-decoration:none;" onclick="this.closest('form').submit();return false;">Orders</a>
+                                </form>
+                            </li>
+                            <li>
+                                <form th:action="@{/cart_completed}" method="post">
+                                    <input type="hidden" th:value="${#request.userPrincipal.principal.getId()}" name="id">
+                                    <a href="#" style="color:#62ab00; text-decoration:none;" onclick="this.closest('form').submit();return false;">Completed orders</a>
+                                </form>
+                            </li>
+
+                            <div th:if="${#request.userPrincipal.principal.getRole() == 'admin'}">
+                                <li class="uk-nav-divider"></li>
+                                <li style="color:#62ab00"><b>Admin panel:</b></li>
+                                <li><a class="navbar-brand" href="/add_product" style="color:#62ab00">Add product</a></li>
+                            </div>
+                            <li class="uk-nav-divider"></li>
+                            <li style="color:#62ab00" th:text="${#request.userPrincipal.principal.getFullName()}"></li>
+                            <li><a class="navbar-brand" href="/logout" style="color:#62ab00">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div th:if="${#authorization.expression('isAuthenticated()') == false}">
+                <div class="uk-inline">
+                    <button class="btn btn-outline-light" style="background-color:#62ab00" type="button">MENU</button>
+                    <div uk-dropdown>
+                        <ul class="uk-nav uk-dropdown-nav">
+                            <li><a class="navbar-brand" href="/" style="color:#62ab00" >Home</a></li>
+                            <li class="uk-nav-divider"></li>
+                            <li><a class="navbar-brand" href="/register" style="color:#62ab00">Register</a></li>
+                            <li><a class="navbar-brand" href="/login" style="color:#62ab00">Login</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </td>
+
+        <td width="44%">
+            <form class="d-flex" role="search" th:action="@{/}" method="post">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="color:#62ab00" name="name">
+                <button class="btn btn-outline-light" style="background-color:#62ab00" type="submit">Search</button>
+            </form>
+        </td>
+        <td width="3%">
+        </td>
+    </tr>
+</table>
+</section>
